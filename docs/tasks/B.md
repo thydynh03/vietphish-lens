@@ -8,7 +8,7 @@
 
 ## How to hand a step to the agent
 
-Open **a new agent session** for each step, PowerShell at the repo root, paste that step's command block exactly. B4 runs in a second terminal tab, in parallel with B2 and B3. When the agent reports done, **you** run the step's "Nghiệm thu" (acceptance) section. If it passes, commit with the command block at the end of the step file. If a test fails, make the agent fix the code. Never edit `server/test/vectors/`.
+Open **a new agent session** for each step, PowerShell at the repo root, paste that step's command block exactly. B4 runs in a second terminal tab, in parallel with B2 and B3. The agent runs the checks (including `npm test`), then commits (English message with the step tag), pushes a branch, opens a PR and merges it, as set out in "Who commits" in `AGENTS.md`. If a test fails, the agent fixes the code. Never edit `server/test/vectors/`.
 
 ## Schedule
 
@@ -31,31 +31,31 @@ Open **a new agent session** for each step, PowerShell at the repo root, paste t
 ### B1
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b1-official-reasons.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not edit server/test/vectors/. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b1-official-reasons.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not edit server/test/vectors/. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### B2
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b2-heuristics.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not edit server/test/vectors/. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b2-heuristics.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not edit server/test/vectors/. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### B4 (second terminal tab)
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b4-vision-safebrowsing.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not call the real Gemini API, the human will run try-gemini.js. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b4-vision-safebrowsing.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not call the real Gemini API, the human will run try-gemini.js. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### B3
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b3-fusion.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not edit server/test/vectors/. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b3-fusion.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the step's test command and paste the real output. Do not edit server/test/vectors/. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### B5
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b5-analyze-server.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run npm test in server/ and the smoke test against the mock server, paste the real output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/b5-analyze-server.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run npm test in server/ and the smoke test against the mock server, paste the real output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### B6 (you run the deploy commands yourself)

@@ -68,7 +68,7 @@ Load the extension with `chrome://extensions` → Developer mode → Load unpack
 
 ## Rules that matter most
 
-- Follow `AGENTS.md`: one workflow step per session, only the files listed in that step, no new dependencies, no commits by agents, no AI attribution in commits or PRs.
+- Follow `AGENTS.md`: one workflow step per session, only the files listed in that step, no new dependencies, agents commit, push, open and merge their own PR only after the checks pass, English commit messages with the step tag, no AI attribution in commits or PRs.
 - User-facing text is Vietnamese with diacritics, copied exactly from the step file. Code identifiers are English.
 - Every value from the server that goes into `innerHTML` passes through `escapeHtml`. Shadow roots are `mode: "closed"`. Only `https://` URLs become the "back to official site" button.
 - Never put an API key in the extension or in any committed file.
