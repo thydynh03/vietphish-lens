@@ -131,6 +131,37 @@ async function captureScreenshot(tab) {
   }
 }
 
+// Trả { brand, keyword } đầu tiên mà hostname chứa keyword, không có thì null.
+function brandKeywordHit(official, hostname) {
+  for (const b of official.brands || []) {
+    for (const k of b.keywords || []) if (k && hostname.includes(k)) return { brand: b, keyword: k };
+  }
+  return null;
+}
+
+// Chế độ cơ bản (K3): server không trả lời được. Tự kết luận từ tên miền để không mất bảo vệ hoàn toàn.
+function offlineResult(official, hostname) {
+  const hit = brandKeywordHit(official, hostname);
+  if (!hit) return null;
+  const officialDomain = (hit.brand.domains || [])[0] || "";
+  return {
+    verdict: "SUSPICIOUS",
+    riskScore: 50,
+    offline: true,
+    degraded: true,
+    brand: officialDomain ? { id: hit.brand.id, name: hit.brand.name, officialUrl: "https://" + officialDomain } : null,
+    reasons: [
+      {
+        code: "OFFLINE_BASIC_CHECK",
+        text:
+          "Không kết nối được máy chủ kiểm tra. Kiểm tra cơ bản: tên miền " + hostname + " chứa '" + hit.keyword +
+          "' nhưng không phải tên miền chính thức " + officialDomain + ".",
+        weight: 0,
+      },
+    ],
+  };
+}
+
 async function callAnalyze(payload) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), CFG.REQUEST_TIMEOUT_MS);
@@ -189,6 +220,9 @@ async function check(tab) {
     return Boolean(now && now.url === myUrl);
   };
 
+  // Khai báo ngoài try để khối catch (chế độ cơ bản) đọc được.
+  let sensitive = false;
+
   try {
     const official = await loadOfficial();
 
@@ -214,8 +248,9 @@ async function check(tab) {
       const signals = (await sendToTab(tab.id, { type: "getSignals" })) || {};
       if (!(await stillHere())) return;
 
-      const sensitive =
-        signals.hasPasswordField || signals.hasOtpField || signals.hasCardField;
+      sensitive = Boolean(signals.hasPasswordField || signals.hasOtpField || signals.hasCardField);
+      // K1: trang lạ có ô nhạy cảm thì khóa gửi biểu mẫu trong lúc chờ kết luận (content.js, bước A4).
+      if (sensitive) await sendToTab(tab.id, { type: "lock" });
       let screenshot;
       if (sensitive || hostnameHasBrandKeyword(official, url.hostname)) {
         const fresh = await chrome.tabs.get(tab.id).catch(() => null);
@@ -226,7 +261,7 @@ async function check(tab) {
       }
 
       result = await callAnalyze({
-        url: tab.url,
+        url: url.origin + url.pathname,
         title: tab.title || "",
         screenshot,
         signals,
@@ -247,11 +282,29 @@ async function check(tab) {
   } catch (e) {
     console.warn("VietPhish: lỗi khi kiểm tra", e);
     if (await stillHere()) {
-      await setBadge(tab.id, null);
-      await saveTabResult(tab.id, {
-        error: String((e && e.message) || e),
-        pageUrl: myUrl,
-      });
+      let local = null;
+      try {
+        // new URL(myUrl), không dùng biến url: tùy cách viết bước 2, url có thể không nằm trong phạm vi của catch.
+        local = offlineResult(await loadOfficial(), new URL(myUrl).hostname);
+      } catch (e2) {
+        local = null;
+      }
+      if (local && sensitive) {
+        // Trang đòi mật khẩu/OTP/số thẻ: hiện dải vàng, content script chuyển sang hỏi lại khi bấm vào ô (A4).
+        // Không lưu trường error: popup của A3 xét error trước verdict, sẽ hiện "Chưa kiểm tra" lệch với dải vàng.
+        await setBadge(tab.id, "SUSPICIOUS");
+        await saveTabResult(tab.id, { ...local, pageUrl: myUrl });
+        await sendToTab(tab.id, { type: "verdict", result: local });
+      } else if (local) {
+        // Không đòi dữ liệu nhạy cảm: chỉ đổi huy hiệu, không phủ dải (tránh làm phiền trang công ty con của ngân hàng).
+        await setBadge(tab.id, "SUSPICIOUS");
+        await saveTabResult(tab.id, { ...local, pageUrl: myUrl });
+        await sendToTab(tab.id, { type: "unlock" });
+      } else {
+        await setBadge(tab.id, null);
+        await saveTabResult(tab.id, { error: String((e && e.message) || e), pageUrl: myUrl });
+        await sendToTab(tab.id, { type: "unlock" });
+      }
     }
   } finally {
     if (inFlight.get(tab.id) === myUrl) inFlight.delete(tab.id);
