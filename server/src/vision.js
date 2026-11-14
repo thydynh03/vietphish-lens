@@ -52,7 +52,8 @@ export function __setVisionClientForTest(fake) {
 async function getClient() {
   if (client === null) {
     const { GoogleGenAI } = await import("@google/genai");
-    client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    // Input dạng "image" của Interactions API chỉ có ở v1beta; v1 trả 400 "not supported for input[1].type".
+    client = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, apiVersion: "v1beta" });
   }
   return client;
 }
