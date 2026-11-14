@@ -82,8 +82,15 @@
 
     /* Chi tiết: lý do */
     .details { margin-top: 10px; text-align: left; }
-    .details ul { margin: 8px 0 0; padding-left: 18px; }
+    .details h3 { margin: 10px 0 4px; font-size: 13px; color: var(--muted); font-weight: 600; }
+    .details ul { margin: 0; padding-left: 18px; font-size: 14px; }
     .details li { margin-bottom: 6px; }
+    .details ul.facts { list-style: none; padding: 0; }
+    .facts li { display: flex; flex-direction: column; padding: 6px 10px; border-radius: 8px; background: var(--soft); border-left: 4px solid var(--none); }
+    .facts li.good { border-left-color: var(--safe); }
+    .facts li.warn { border-left-color: var(--warn); }
+    .facts li.bad { border-left-color: var(--danger); }
+    .facts .k { font-size: 12px; color: var(--muted); }
 
     details.tech { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 8px; color: var(--muted); font-size: 13px; text-align: left; }
     details.tech summary { cursor: pointer; }
@@ -119,7 +126,14 @@
     <button class="btn primary" id="toggle" hidden aria-expanded="false">Xem chi tiết +</button>
 
     <div class="details" id="details" hidden>
-      <ul id="reasons"></ul>
+      <div id="factsBox" hidden>
+        <h3>Thông tin trang</h3>
+        <ul class="facts" id="facts"></ul>
+      </div>
+      <div id="why" hidden>
+        <h3>Vì sao có kết luận này?</h3>
+        <ul id="reasons"></ul>
+      </div>
     </div>
 
     <div class="row">
