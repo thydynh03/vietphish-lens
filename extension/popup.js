@@ -126,7 +126,9 @@
     // Lý do, gói trong "Xem chi tiết"
     const list = $("reasons");
     list.textContent = "";
-    const reasons = hasVerdict && Array.isArray(r.reasons) ? r.reasons.filter((x) => x && x.text).slice(0, MAX_REASONS) : [];
+    // Trang an toàn không hiện lý do: các lý do nhỏ (như "không dùng HTTPS") dễ làm người dùng hoang mang.
+    const allReasons = hasVerdict && Array.isArray(r.reasons) ? r.reasons.filter((x) => x && x.text) : [];
+    const reasons = kind === "SAFE" ? [] : allReasons.slice(0, MAX_REASONS);
     for (const x of reasons) {
       const li = document.createElement("li");
       li.textContent = x.text;
@@ -148,6 +150,7 @@
     const tech = [];
     if (self.VP_CONFIG && self.VP_CONFIG.API_BASE) tech.push("Máy chủ: " + self.VP_CONFIG.API_BASE);
     if (hasVerdict) tech.push("Kết luận: " + r.verdict + ", điểm " + score + "/100");
+    if (kind === "SAFE" && allReasons.length) tech.push("Lý do: " + allReasons.map((x) => x.code || x.text).join(", "));
     if (r.error) tech.push("Lỗi: " + r.error);
     $("tech").textContent = tech.join(" · ");
   }
