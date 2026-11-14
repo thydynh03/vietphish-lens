@@ -83,13 +83,17 @@ The demo pages were built by the team, carry a watermark, send their forms nowhe
 
 ## Results
 
-Filled in during the build window.
+Measured with `node eval/run_eval.js --api http://127.0.0.1:8787` (`VISION_MOCK=1`, Safe Browsing key off, URL-only requests without screenshots):
 
 | Configuration | TP | FP | TN | FN | Precision | Recall | False positive rate |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [...] | | | | | | | |
+| `blacklist_only` | 0 | 0 | 15 | 13 | n/a | 0.0% | 0.0% |
+| `no_vision` | 11 | 0 | 15 | 2 | 100.0% | 84.6% | 0.0% |
+| `full` (URL-only) | 11 | 0 | 15 | 2 | 100.0% | 84.6% | 0.0% |
 
-Sample size: [...]. Limitations: small sample, the fake pages were named by the team.
+Latency on local mock server: `p50 15 ms`, `p95 16 ms`, `0` network errors across all 3 configurations. With page signals and vision on `http://xacthuc-taikhoan.com:8080/`, the neutral-domain false negative is promoted to `DANGER 85` (`server/test/smoke.js` 6/6 pass).
+
+Sample size: 28 URLs (`eval/domains.csv`: 15 legitimate, 13 phishing). Limitations: small sample, the fake pages were named by the team.
 
 ## Demo video
 
