@@ -8,7 +8,7 @@
 
 ## How to hand a step to the agent
 
-Open **a new agent session** for each step, PowerShell at the repo root, paste that step's command block exactly. When the agent reports done, **you** run the step's "Nghiệm thu" (acceptance) section. If it passes, commit with the command block at the end of the step file. The agent never commits.
+Open **a new agent session** for each step, PowerShell at the repo root, paste that step's command block exactly. The agent runs the checks, then commits (English message with the step tag), pushes a branch, opens a PR and merges it, as set out in "Who commits" in `AGENTS.md`. When the acceptance needs Chrome, the agent stops before merging: **you** check in Chrome and tell it to merge.
 
 ## Schedule
 
@@ -19,7 +19,7 @@ Open **a new agent session** for each step, PowerShell at the repo root, paste t
 | 08:30–09:25 | A2 | | Agent done, you run the "Tự kiểm trước khi báo xong" (self-check) section |
 | 09:25–09:35 | A2 acceptance | B says "B5 đã push" | `git pull`, `$env:VISION_MOCK="1"; node server/src/index.js`, run the A2 acceptance table. Commit, push |
 | 09:35–10:00 | **A5** | A2 committed | The A5 acceptance table passes. Step 4 needs A4: if C has not pushed it yet, do the other steps first, then `git pull` and do step 4. Commit, push |
-| Around 09:50 | Switch `API_BASE` | B sends the Cloud Run URL | Edit `API_BASE` in `extension/config.js`, reload the extension, rerun the 3 scenarios. Commit `chore(extension): point API_BASE to Cloud Run` |
+| Around 09:50 | Switch `API_BASE` | B sends the Cloud Run URL | Edit `API_BASE` in `extension/config.js`, reload the extension, rerun the 3 scenarios. Commit `chore(extension): point API_BASE to Cloud Run` through a PR |
 | 10:00–10:40 | A3 (optional) | A5 committed | Not passing at 10:40: `git checkout -- extension/`, drop it, never commit half of it |
 | 10:40–10:45 | Full check | | The 4 scenarios in section 3 of `docs/REQUIREMENTS.md` are correct against Cloud Run |
 | 10:45–11:20 | C3 (human) | | Drive the machine following C's recording script |
@@ -30,25 +30,25 @@ Open **a new agent session** for each step, PowerShell at the repo root, paste t
 ### A1
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a1-content-overlay.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the check commands an agent can run and paste their real output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a1-content-overlay.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the check commands an agent can run and paste their real output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### A2
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a2-background.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the check commands an agent can run and paste their real output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a2-background.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the check commands an agent can run and paste their real output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### A5
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a5-che-do-co-ban.md exactly. Change only the 4 places in extension/background.js listed in the step file. Declare let sensitive BEFORE the try block. Run node --check extension/background.js and paste the output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a5-che-do-co-ban.md exactly. Change only the 4 places in extension/background.js listed in the step file. Declare let sensitive BEFORE the try block. Run node --check extension/background.js and paste the output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### A3 (optional)
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a3-popup-offline.md exactly. A5 already changed background.js before this step: insert only the 4 places of A3 and do not change any line A5 wrote. Run the check commands an agent can run and paste their real output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a3-popup-offline.md exactly. A5 already changed background.js before this step: insert only the 4 places of A3 and do not change any line A5 wrote. Run the check commands an agent can run and paste their real output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ## Who to notify

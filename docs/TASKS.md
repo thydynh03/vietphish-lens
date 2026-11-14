@@ -10,12 +10,12 @@ Step details live in `.agent/workflows/`. The original hourly schedule is in `do
 2. Open PowerShell at the repo root and paste the step's command. All commands follow the same template, only the step file changes. The ready-to-paste version of every step is in `docs/tasks/`:
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/<STEP>.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the check commands an agent can run and paste their real output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/<STEP>.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run the check commands an agent can run and paste their real output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
    In the Antigravity IDE: open the repo folder, start a new agent conversation and paste the quoted part.
 
-3. When the agent reports done, **a human** runs the step's "Nghiệm thu" (acceptance) section. If it passes, commit with the exact command block at the end of the step file. If it fails, see "Khi agent làm sai" (when the agent gets it wrong) in `docs/NGAY-THI.md`.
+3. The agent runs the checks, then commits with an English message and the step tag, pushes a branch, opens a PR and merges it ("Who commits" in `AGENTS.md`). Steps whose acceptance needs Chrome stop before the merge: **a human** checks, then tells the agent to merge. If it goes wrong, see "Khi agent làm sai" (when the agent gets it wrong) in `docs/NGAY-THI.md`.
 4. Steps marked "human" are never given to an agent. Follow the checklist in your task file.
 
 The repo path may differ on each laptop. Everyone `cd`s to their own path.

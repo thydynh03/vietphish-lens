@@ -8,7 +8,7 @@
 
 ## How to hand a step to the agent
 
-Only C2 and A4 go to the agent. Open **a new agent session** for each, PowerShell at the repo root, paste the command block exactly. When the agent reports done, **you** run the step's "Nghiệm thu" (acceptance) section. If it passes, commit with the command block at the end of the step file. 00, C1 and C3 are human work.
+Only C2 and A4 go to the agent. Open **a new agent session** for each, PowerShell at the repo root, paste the command block exactly. The agent runs the checks, then commits (English message with the step tag), pushes a branch, opens a PR and merges it, as set out in "Who commits" in `AGENTS.md`. A4 needs Chrome: the agent stops before merging, **you** run the A4 acceptance table with `vpSend`, then tell it to merge. 00, C1 and C3 are human work.
 
 ## Schedule
 
@@ -31,13 +31,13 @@ Only C2 and A4 go to the agent. Open **a new agent session** for each, PowerShel
 ### C2
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/c2-eval.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run node eval/run_eval.js and paste the real output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/c2-eval.md exactly. Read the whole step file before writing the first line of code. Only create or modify the files listed in its 'File được sửa' section. Run node eval/run_eval.js and paste the real output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ### A4
 
 ```powershell
-agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a4-khoa-o-nhap.md exactly. This is the exception in the Folder ownership table of AGENTS.md: C may edit extension/content.js, only in this step. Change only the 3 places listed in the step file, do not touch getSignals, render or STYLE. Run node --check extension/content.js and paste the output. Do not run git add, git commit or git push. Stop when the step is done."
+agy --model gemini-4-argon-medium --mode accept-edits -i "Read AGENTS.md and .agent/skills/vietphish/SKILL.md, then follow .agent/workflows/a4-khoa-o-nhap.md exactly. This is the exception in the Folder ownership table of AGENTS.md: C may edit extension/content.js, only in this step. Change only the 3 places listed in the step file, do not touch getSignals, render or STYLE. Run node --check extension/content.js and paste the output. When the checks pass, follow Who commits in AGENTS.md: English commit message with the step tag, push a branch, open a PR and merge it. If the acceptance needs a human in Chrome, push and open the PR, then stop and ask before merging. Stop when the step is done."
 ```
 
 ## Who to notify

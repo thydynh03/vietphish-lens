@@ -9,7 +9,7 @@ New to the repo? Read in this order: `README.md` → `docs/REQUIREMENTS.md` (req
 1. Do **one step** at a time, following exactly one file in `.agent/workflows/`. Read that whole file before writing the first line of code.
 2. Only create or modify the files listed in that step's "File được sửa" (files to modify) section. Do not touch any other file, even if you see a possible improvement.
 3. Use the exact file names, function names, signatures, constants and Vietnamese strings given in the step. Do not rename, "optimize", merge or split files.
-4. When done, run exactly the commands in the step's "Nghiệm thu" (acceptance) and "Tự kiểm trước khi báo xong" (self-check) sections that an agent can run. If they fail, fix the code until they pass. Paste the real command output in your final answer. Do not commit: see "Commit and pull request rules" below.
+4. When done, run exactly the commands in the step's "Nghiệm thu" (acceptance) and "Tự kiểm trước khi báo xong" (self-check) sections that an agent can run. If they fail, fix the code until they pass. Paste the real command output in your final answer. Then commit, push, open the PR and merge it: see "Commit and pull request rules" below.
 5. If a test fails, fix the **code**. Never edit the test vectors in `server/test/vectors/`: they have been verified. If you are sure a vector is wrong, stop and ask a human.
 6. If one error survives 2 fix attempts, stop. Report the error and what you tried. Do not keep guessing.
 7. When the step is done, stop. Do not continue to the next step on your own.
@@ -55,11 +55,24 @@ On Windows PowerShell, set environment variables with `$env:NAME="value"` before
 
 ### Who commits
 
-- Agents never run `git add`, `git commit`, `git push`, `gh pr create` or `gh pr merge` on their own. A human reviews the change first, then commits.
-- An agent may stage files or open a PR only when a human explicitly asks for it in the current conversation. Approval for one commit or PR does not carry over to the next one.
-- When a workflow step passes its acceptance checks, stop and print:
+The team agreed for the build window: agents commit, push, open the PR and merge it themselves, so nobody waits on a human to type git commands. The conditions below are mandatory. This replaces older text in `docs/NGAY-THI.md` and the step files that says agents never run git.
+
+- Only after the step's checks pass. Run every command the agent can run from the step's "Tự kiểm trước khi báo xong" (self-check) and "Nghiệm thu" (acceptance) sections, plus `cd server && npm test` if anything under `server/` changed. If a check fails, fix the code. Never commit, push or merge failing work.
+- If the acceptance needs a human in Chrome (load the extension, click through a demo page), commit and push to the branch, open the PR, then stop and ask the human to check. Merge only after the human replies that it passed.
+- Flow for every step:
+  1. `git fetch origin` then `git switch -c <type>/<step>-<topic> origin/main`, for example `feat/b2-heuristics`.
+  2. Stage only the files listed in the step's "File được sửa" section, by name: `git add server/src/heuristics.js server/test/heuristics.test.js`.
+  3. `git commit` with an English message (see "Commit messages").
+  4. `git fetch origin` then `git rebase origin/main`. If the rebase has a conflict, stop and ask the human. Never resolve a conflict in a file you do not own.
+  5. Re-run the checks after the rebase, then `git push -u origin <branch>`.
+  6. `gh pr create --base main --fill` or with `--body-file` (see "Pull requests").
+  7. `gh pr merge --squash --delete-branch` once the checks pass. Then `git switch main` and `git pull`.
+- Never push directly to `main`, never `git push --force` to `main`, never merge a PR that touches another person's folders or `docs/API.md` without that person's OK.
+- After merging, print:
   1. The list of files created or modified in that step.
   2. The real output of the acceptance commands.
+  3. The PR URL and the merge commit.
+- Tell the teammates who are waiting (see "Messages to send" in `docs/TASKS.md`); the human sends the Zalo message.
 
 ### No AI attribution
 
@@ -72,8 +85,9 @@ On Windows PowerShell, set environment variables with `$env:NAME="value"` before
 - Follow Semantic Commits: `<type>(<scope>): <subject>`.
 - Types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `style`, `build`, `ci`.
 - Scopes match the folders: `extension`, `server`, `eval`, `scripts`, `demo-sites`, `docs`, `shared`.
-- For a workflow step, use the exact message from the "Commit" section at the end of that step file, including the step tag, for example `feat(server): heuristic tên miền [B2]`. Do not rewrite or translate it.
-- For any other commit, write the subject in English, imperative mood, lowercase after the colon, no trailing period, at most 72 characters.
+- **Every commit message is in English**, including workflow steps. The "Commit" section at the end of each step file is written in Vietnamese: keep its type, scope and step tag, and translate the subject. For example the step file's `feat(server): heuristic tên miền [B2]` becomes `feat(server): add domain heuristics [B2]`.
+- Subject: imperative mood, lowercase after the colon, no trailing period, at most 72 characters. Always end a workflow-step commit with its step tag, for example `[A4]`.
+- The commit commands in the step files (`git add` of a file list) are still the source for which files to stage.
 - Add a body when the change is not obvious from the subject: what changed and why, one bullet per point.
 - One commit per logical change. Do not mix files from different owners (see "Folder ownership") in one commit.
 - Stage files by name, as listed in the step file. Do not use `git add .` or `git add -A`.
@@ -100,4 +114,6 @@ fix(server): handle punycode domains in heuristics
   - **Testing**: commands run and their result.
   - **Notes**: risks, follow-ups, or changes to `docs/API.md` or `shared/official_domains.json` that the whole team must know about.
 - Keep each PR inside one owner's folders. A PR that touches `docs/API.md` needs agreement from the whole team before merge.
-- Do not force-push to `main`. Do not merge your own PR without a teammate looking at it, unless the team agrees during the build window.
+- Merge with `gh pr merge --squash --delete-branch` so each step lands on `main` as one English commit with its step tag.
+- During the build window the team agreed that a PR may be merged by the agent that opened it, under the conditions in "Who commits". Outside the build window, wait for a teammate's review.
+- Do not force-push to `main`.
