@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-10",
+  "version": "2026-11-14",
   "trustedSuffixes": ["gov.vn"],
   "brands": [
     { "id": "vietcombank", "name": "Vietcombank", "domains": ["vietcombank.com.vn"], "keywords": ["vietcombank", "vcbdigibank"] },
@@ -14,6 +14,8 @@
     { "id": "sacombank", "name": "Sacombank", "domains": ["sacombank.com.vn"], "keywords": ["sacombank"] },
     { "id": "momo", "name": "MoMo", "domains": ["momo.vn"], "keywords": ["momo"] },
     { "id": "zalopay", "name": "ZaloPay", "domains": ["zalopay.vn"], "keywords": ["zalopay"] },
+    { "id": "microsoft", "name": "Microsoft Outlook", "domains": ["microsoft.com", "outlook.com", "live.com", "microsoftonline.com", "hotmail.com"], "keywords": ["outlook", "microsoft", "office365", "hotmail"] },
+    { "id": "facebook", "name": "Facebook", "domains": ["facebook.com"], "keywords": ["facebook"] },
     { "id": "vneid", "name": "VNeID", "domains": ["vneid.gov.vn"], "keywords": ["vneid"] },
     { "id": "dichvucong", "name": "Cổng Dịch vụ công quốc gia", "domains": ["dichvucong.gov.vn"], "keywords": ["dichvucong"] },
     { "id": "thue", "name": "Cục Thuế", "domains": ["gdt.gov.vn"], "keywords": ["thuedientu", "gdt-gov", "tongcucthue"] },

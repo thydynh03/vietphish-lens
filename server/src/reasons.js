@@ -10,6 +10,7 @@ const TEMPLATES = {
   "SUBDOMAIN_TRICK": { weight: 40, text: "Tên miền thật là {registrable}; phần chữ {brand} phía trước chỉ là phần giả." },
   "BRAND_KEYWORD": { weight: 25, text: "Tên miền {domain} chứa tên {brand} nhưng không thuộc {brand}." },
   "SUSPICIOUS_TLD": { weight: 15, text: "Đuôi .{tld} thường bị lợi dụng trong lừa đảo." },
+  "FREE_HOSTING": { weight: 15, text: "Trang đặt trên nền tảng miễn phí {platform}, nơi ai cũng tạo được địa chỉ trong vài giây." },
   "NO_HTTPS": { weight: 10, text: "Trang không dùng kết nối bảo mật HTTPS." },
   "FORM_OTHER_HOST": { weight: 10, text: "Dữ liệu bạn nhập sẽ được gửi sang máy chủ khác ({host})." },
   "URGENCY": { weight: 5, text: "Trang dùng lời lẽ hối thúc (khóa tài khoản, cập nhật gấp…)." },

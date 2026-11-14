@@ -2,6 +2,7 @@ import https from "node:https";
 import net from "node:net";
 import tls from "node:tls";
 import { parse } from "tldts";
+import { freeHostingPlatform } from "./hosting.js";
 
 // Ngân sách thời gian. Timeout bên trong (RDAP, TLS) phải ngắn hơn timeout tổng
 // để khi lookup tự hủy thì kết quả lỗi về trước, còn timeout tổng chỉ là lưới an toàn.
@@ -328,8 +329,11 @@ export async function inspectNetIntel(url, { sensitive = false, brandLike = fals
 
   const host = hostname.toLowerCase().replace(/\.+$/, "");
   const registrableDomain = getRegistrableDomain(host);
+  // Trên nền tảng miễn phí, RDAP chỉ biết tuổi của nền tảng (vd. vercel.app 6 năm),
+  // không biết trang con vừa tạo hôm qua. Bỏ qua tuổi để khỏi làm trang trông đáng tin.
+  const platform = freeHostingPlatform(host);
 
-  const cachedAge = cacheGet(ageCache, registrableDomain);
+  const cachedAge = platform ? { ageDays: null, source: "platform" } : cacheGet(ageCache, registrableDomain);
   const cachedTls = isHttps ? cacheGet(tlsCache, host) : null;
 
   const agePromise = cachedAge
@@ -368,6 +372,7 @@ export async function inspectNetIntel(url, { sensitive = false, brandLike = fals
     isHttps,
     ageDays: rdapRes.ageDays ?? null,
     ageSource: rdapRes.source,
+    platform,
     tls: tlsRes ? stripInternal(tlsRes) : null
   };
   // Lookup nào hết giờ bên trong thì cũng tính là degraded, giống timeout tổng.
