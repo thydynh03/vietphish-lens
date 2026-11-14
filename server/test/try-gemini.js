@@ -47,7 +47,7 @@ console.log(`[2] detectBrand: ${time}ms, ảnh ${kb}KB`);
 console.log(JSON.stringify(r, null, 2));
 
 if (r?.error && r.error.match(/^4\d\d /)) {
-  const raw = await fetch("https://generativelanguage.googleapis.com/v1/interactions", {
+  const raw = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
     method: "POST",
     headers: { "content-type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
     body: JSON.stringify({ model: VISION_CONFIG.model, input: [{ type: "text", text: PROMPT }, { type: "image", data: base64, mime_type: mime }], response_format: { type: "text", mime_type: "application/json", schema: BRAND_SCHEMA } }),
