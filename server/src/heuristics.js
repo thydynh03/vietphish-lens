@@ -3,8 +3,9 @@ import { parse } from "tldts";
 import { distance } from "fastest-levenshtein";
 import { OFFICIAL } from "./official.js";
 import { reason } from "./reasons.js";
+import { freeHostingPlatform } from "./hosting.js";
 
-export const WEIGHTS = { homoglyph: 40, lookalike: 40, subdomainTrick: 40, brandKeyword: 25, suspiciousTld: 15, noHttps: 10, formOtherHost: 10 };
+export const WEIGHTS = { homoglyph: 40, lookalike: 40, subdomainTrick: 40, brandKeyword: 25, suspiciousTld: 15, freeHosting: 15, noHttps: 10, formOtherHost: 10 };
 export const SUSPICIOUS_TLDS = new Set(["top", "xyz", "cc", "icu", "vip", "shop", "online", "click", "info", "live"]);
 
 function skeleton(s) {
@@ -55,6 +56,12 @@ export function domainHeuristics(url, signals = {}) {
   if (SUSPICIOUS_TLDS.has(p.publicSuffix)) {
     score += WEIGHTS.suspiciousTld;
     reasons.push(reason("SUSPICIOUS_TLD", { tld: p.publicSuffix }));
+  }
+
+  const platform = freeHostingPlatform(hostname);
+  if (platform) {
+    score += WEIGHTS.freeHosting;
+    reasons.push(reason("FREE_HOSTING", { platform }));
   }
 
   if (u.protocol !== "https:") {

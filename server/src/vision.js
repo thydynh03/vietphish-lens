@@ -2,7 +2,7 @@ import { OFFICIAL } from "./official.js";
 
 export const VISION_CONFIG = { model: process.env.GEMINI_MODEL || "gemini-3.5-flash-lite", timeoutMs: 6000 };
 export const PROMPT = `Bạn là chuyên gia nhận diện giao diện web. Nhìn ảnh chụp màn hình và cho biết:
-- Trang này trông giống giao diện của thương hiệu nào trong danh sách enum (ngân hàng, ví điện tử, cơ quan nhà nước Việt Nam). Nếu không giống thương hiệu nào, trả "none".
+- Trang này trông giống giao diện của thương hiệu nào trong danh sách enum (ngân hàng, ví điện tử, cơ quan nhà nước Việt Nam, và các dịch vụ quốc tế như Microsoft Outlook, Facebook). Nếu không giống thương hiệu nào, trả "none".
 - confidence từ 0 đến 1.
 - Trang yêu cầu người dùng nhập những dữ liệu nhạy cảm nào. Chỉ liệt kê khi trong ảnh thật sự có ô nhập tương ứng.
 - Có lời lẽ hối thúc (khóa tài khoản, cập nhật gấp, phạt) không.
