@@ -1,0 +1,57 @@
+[
+  {
+    "name": "1. Trang thật vietcombank.com.vn",
+    "body": { "url": "https://vietcombank.com.vn/", "title": "Vietcombank", "mode": "full" },
+    "expect": { "verdict": "SAFE", "riskScore": 0 }
+  },
+  {
+    "name": "2. VCB giả, chỉ heuristic",
+    "body": {
+      "url": "http://vietcombank-xacthuc.top:8080/",
+      "title": "Vietcombank - Đăng nhập VCB Digibank",
+      "signals": { "hasPasswordField": true, "hasOtpField": false, "hasCardField": false, "formActionHost": "collector.example-attacker.xyz" },
+      "mode": "no_vision"
+    },
+    "expect": { "verdict": "SUSPICIOUS", "riskScore": 60 }
+  },
+  {
+    "name": "3. VCB giả, đầy đủ",
+    "body": {
+      "url": "http://vietcombank-xacthuc.top:8080/",
+      "title": "Vietcombank - Đăng nhập VCB Digibank",
+      "signals": { "hasPasswordField": true, "hasOtpField": false, "hasCardField": false, "formActionHost": "collector.example-attacker.xyz" },
+      "mode": "full"
+    },
+    "expect": { "verdict": "DANGER", "riskScore": 100 }
+  },
+  {
+    "name": "4. VNeID giả đòi OTP",
+    "body": {
+      "url": "http://vneid-capnhat.cc:8080/",
+      "title": "VNeID - Cập nhật định danh mức 2 - Nhập mã OTP",
+      "signals": { "hasPasswordField": false, "hasOtpField": true, "hasCardField": false, "formActionHost": null },
+      "mode": "full"
+    },
+    "expect": { "verdict": "DANGER", "riskScore": 100 }
+  },
+  {
+    "name": "5. Bài báo nhắc Vietcombank",
+    "body": {
+      "url": "http://tintuc-demo.vn:8080/",
+      "title": "Vietcombank điều chỉnh lãi suất tiết kiệm - Tin tức demo",
+      "signals": { "hasPasswordField": false, "hasOtpField": false, "hasCardField": false, "formActionHost": null },
+      "mode": "full"
+    },
+    "expect": { "verdict": "SAFE", "riskScore": 19 }
+  },
+  {
+    "name": "6. Tên miền trung lập giả giao diện VCB",
+    "body": {
+      "url": "http://xacthuc-taikhoan.com:8080/",
+      "title": "Vietcombank - Đăng nhập VCB Digibank",
+      "signals": { "hasPasswordField": true, "hasOtpField": false, "hasCardField": false, "formActionHost": "collector.example-attacker.xyz" },
+      "mode": "full"
+    },
+    "expect": { "verdict": "DANGER", "riskScore": 85 }
+  }
+]

@@ -1,0 +1,20 @@
+[
+  { "hostname": "vietcombank.com.vn", "expected": true },
+  { "hostname": "vcbdigibank.vietcombank.com.vn", "expected": true },
+  { "hostname": "www.bidv.com.vn", "expected": true },
+  { "hostname": "ebanking.techcombank.com.vn", "expected": true },
+  { "hostname": "www.techcombank.com", "expected": true },
+  { "hostname": "vneid.gov.vn", "expected": true },
+  { "hostname": "dichvucong.gov.vn", "expected": true },
+  { "hostname": "thuedientu.gdt.gov.vn", "expected": true },
+  { "hostname": "momo.vn", "expected": true },
+  { "hostname": "vnexpress.net", "expected": false },
+  { "hostname": "shopee.vn", "expected": false },
+  { "hostname": "www.google.com", "expected": false },
+  { "hostname": "vietcornbank.com.vn", "expected": false },
+  { "hostname": "vietcombank-xacthuc.top", "expected": false },
+  { "hostname": "vietcombank.com.vn.secure-login.xyz", "expected": false },
+  { "hostname": "dichvucong-gov.top", "expected": false },
+  { "hostname": "techcornbank.com", "expected": false },
+  { "hostname": "xacthuc-taikhoan.com", "expected": false }
+]

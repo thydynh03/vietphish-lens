@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>VNeID - Cập nhật định danh mức 2 - Nhập mã OTP</title>
+<style>
+  body{margin:0;font-family:system-ui,"Segoe UI",sans-serif;background:#fdf3f2;color:#2a1a1a}
+  .demo{position:fixed;inset:auto 0 0 0;background:#111;color:#ffde59;text-align:center;font-weight:700;padding:8px;letter-spacing:.05em}
+  header{background:#b3261e;color:#fff;padding:14px 24px;font-size:20px;font-weight:800}
+  main{max-width:400px;margin:48px auto;background:#fff;border-radius:10px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  h1{font-size:19px;margin:0 0 8px}
+  p{font-size:14px}
+  label{display:block;font-size:13px;margin:12px 0 4px}
+  input{width:100%;box-sizing:border-box;padding:10px;border:1px solid #e0c9c7;border-radius:6px;font:inherit;letter-spacing:.3em}
+  button{margin-top:18px;width:100%;padding:12px;border:0;border-radius:6px;background:#b3261e;color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+<header>VNeID · Định danh điện tử</header>
+<main>
+  <h1>Cập nhật tài khoản định danh mức 2</h1>
+  <p>Hệ thống đã gửi mã xác thực đến số điện thoại của bạn. Vui lòng nhập mã OTP trong 5 phút để tránh bị khóa tài khoản.</p>
+  <form onsubmit="event.preventDefault();alert('Trang DEMO: không gửi dữ liệu đi đâu.')">
+    <label for="cccd">Số CCCD</label>
+    <input id="cccd" name="cccd" inputmode="numeric">
+    <label for="otp">Mã OTP</label>
+    <input id="otp" name="otp" autocomplete="one-time-code" inputmode="numeric" placeholder="Nhập mã OTP">
+    <button type="submit">Xác nhận</button>
+  </form>
+</main>
+<div class="demo">TRANG DEMO – KHÔNG PHẢI TRANG THẬT – DÙNG ĐỂ KIỂM THỬ VIETPHISH LENS</div>
+</body>
+</html>

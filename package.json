@@ -1,0 +1,12 @@
+{
+  "name": "vietphish-lens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Extension Chrome cảnh báo trang giả mạo ngân hàng và cơ quan nhà nước Việt Nam",
+  "scripts": {
+    "server": "node server/src/index.js",
+    "demo-sites": "node demo-sites/serve.js",
+    "test": "npm --prefix server test"
+  }
+}

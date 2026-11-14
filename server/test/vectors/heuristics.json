@@ -1,0 +1,35 @@
+[
+  { "url": "https://vnexpress.net/ngan-hang-vietcombank-tang-lai-suat", "score": 0, "codes": [] },
+  { "url": "https://shopee.vn/", "score": 0, "codes": [] },
+  { "url": "https://www.google.com/", "score": 0, "codes": [] },
+  { "url": "https://cafef.vn/bidv-bao-lai-quy-3.chn", "score": 0, "codes": [] },
+  { "url": "https://github.com/", "score": 0, "codes": [] },
+  { "url": "https://tuoitre.vn/canh-bao-gia-mao-vneid.htm", "score": 0, "codes": [] },
+  { "url": "https://vietcornbank.com.vn/login", "score": 40, "codes": ["LOOKALIKE_DOMAIN"] },
+  { "url": "https://vietcombank-xacthuc.top/login", "score": 40, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD"] },
+  { "url": "https://vietcombank.com.vn.secure-login.xyz/", "score": 55, "codes": ["SUBDOMAIN_TRICK", "SUSPICIOUS_TLD"] },
+  { "url": "https://xn--vietcmbank-ivi.com/", "score": 40, "codes": ["HOMOGLYPH"] },
+  { "url": "https://bidv-hotro.cc/otp", "score": 40, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD"] },
+  { "url": "https://vneid-capnhat.cc/", "score": 40, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD"] },
+  { "url": "https://dichvucong-gov.top/", "score": 40, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD"] },
+  { "url": "https://techcornbank.com/", "score": 40, "codes": ["LOOKALIKE_DOMAIN"] },
+  { "url": "https://agribank-vn.online/", "score": 40, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD"] },
+  { "url": "https://momo-nhanqua.vip/", "score": 40, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD"] },
+  { "url": "https://vietinbannk.vn/", "score": 40, "codes": ["LOOKALIKE_DOMAIN"] },
+  { "url": "https://hoan-thue-2026.com/thuedientu", "score": 0, "codes": [] },
+  { "url": "https://xacthuc-taikhoan.com/", "score": 0, "codes": [] },
+  {
+    "url": "http://vietcombank-xacthuc.top:8080/",
+    "signals": { "hasPasswordField": true, "formActionHost": "collector.example-attacker.xyz" },
+    "score": 60,
+    "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS", "FORM_OTHER_HOST"]
+  },
+  { "url": "http://vneid-capnhat.cc:8080/", "signals": { "hasOtpField": true }, "score": 50, "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS"] },
+  { "url": "http://tintuc-demo.vn:8080/", "signals": {}, "score": 10, "codes": ["NO_HTTPS"] },
+  {
+    "url": "http://xacthuc-taikhoan.com:8080/",
+    "signals": { "hasPasswordField": true, "formActionHost": "collector.example-attacker.xyz" },
+    "score": 20,
+    "codes": ["NO_HTTPS", "FORM_OTHER_HOST"]
+  }
+]

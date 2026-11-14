@@ -1,0 +1,22 @@
+{
+  "version": "2026-10-10",
+  "trustedSuffixes": ["gov.vn"],
+  "brands": [
+    { "id": "vietcombank", "name": "Vietcombank", "domains": ["vietcombank.com.vn"], "keywords": ["vietcombank", "vcbdigibank"] },
+    { "id": "vietinbank", "name": "VietinBank", "domains": ["vietinbank.vn"], "keywords": ["vietinbank"] },
+    { "id": "bidv", "name": "BIDV", "domains": ["bidv.com.vn"], "keywords": ["bidv"] },
+    { "id": "agribank", "name": "Agribank", "domains": ["agribank.com.vn"], "keywords": ["agribank"] },
+    { "id": "techcombank", "name": "Techcombank", "domains": ["techcombank.com", "techcombank.com.vn"], "keywords": ["techcombank"] },
+    { "id": "mbbank", "name": "MB Bank", "domains": ["mbbank.com.vn"], "keywords": ["mbbank"] },
+    { "id": "acb", "name": "ACB", "domains": ["acb.com.vn"], "keywords": ["acbbank", "acb-online"] },
+    { "id": "vpbank", "name": "VPBank", "domains": ["vpbank.com.vn"], "keywords": ["vpbank"] },
+    { "id": "tpbank", "name": "TPBank", "domains": ["tpb.vn"], "keywords": ["tpbank"] },
+    { "id": "sacombank", "name": "Sacombank", "domains": ["sacombank.com.vn"], "keywords": ["sacombank"] },
+    { "id": "momo", "name": "MoMo", "domains": ["momo.vn"], "keywords": ["momo"] },
+    { "id": "zalopay", "name": "ZaloPay", "domains": ["zalopay.vn"], "keywords": ["zalopay"] },
+    { "id": "vneid", "name": "VNeID", "domains": ["vneid.gov.vn"], "keywords": ["vneid"] },
+    { "id": "dichvucong", "name": "Cổng Dịch vụ công quốc gia", "domains": ["dichvucong.gov.vn"], "keywords": ["dichvucong"] },
+    { "id": "thue", "name": "Cục Thuế", "domains": ["gdt.gov.vn"], "keywords": ["thuedientu", "gdt-gov", "tongcucthue"] },
+    { "id": "bhxh", "name": "Bảo hiểm xã hội Việt Nam", "domains": ["baohiemxahoi.gov.vn", "vss.gov.vn"], "keywords": ["baohiemxahoi", "bhxh"] }
+  ]
+}

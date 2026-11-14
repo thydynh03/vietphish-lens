@@ -1,0 +1,29 @@
+url,label,note
+https://vietcombank.com.vn/vi-VN/Ca-nhan,legit,trang chính thức
+https://vcbdigibank.vietcombank.com.vn/login,legit,subdomain chính thức
+https://www.bidv.com.vn/vn/ca-nhan,legit,trang chính thức
+https://ebanking.techcombank.com.vn/,legit,subdomain chính thức
+https://www.techcombank.com/,legit,domain .com chính thức
+https://vneid.gov.vn/,legit,gov.vn
+https://dichvucong.gov.vn/p/home/dvc-trang-chu.html,legit,gov.vn
+https://thuedientu.gdt.gov.vn/,legit,gov.vn
+https://momo.vn/,legit,ví điện tử
+https://vnexpress.net/ngan-hang-vietcombank-tang-lai-suat,legit,trang tin nhắc tên ngân hàng
+https://shopee.vn/,legit,không liên quan
+https://www.google.com/,legit,không liên quan
+https://cafef.vn/bidv-bao-lai-quy-3.chn,legit,trang tin nhắc tên ngân hàng
+https://github.com/,legit,không liên quan
+https://tuoitre.vn/canh-bao-gia-mao-vneid.htm,legit,bài báo nhắc VNeID
+https://vietcornbank.com.vn/login,phish,rn thay m (tự tạo)
+https://vietcombank-xacthuc.top/login,phish,từ khóa + đuôi lạ (tự tạo)
+https://vietcombank.com.vn.secure-login.xyz/,phish,subdomain lừa (tự tạo)
+https://xn--vietcmbank-ivi.com/,phish,punycode (tự tạo)
+https://bidv-hotro.cc/otp,phish,từ khóa + đuôi lạ (tự tạo)
+https://vneid-capnhat.cc/,phish,từ khóa + đuôi lạ (tự tạo)
+https://dichvucong-gov.top/,phish,từ khóa + đuôi lạ (tự tạo)
+https://techcornbank.com/,phish,rn thay m (tự tạo)
+https://agribank-vn.online/,phish,từ khóa + đuôi lạ (tự tạo)
+https://momo-nhanqua.vip/,phish,từ khóa + đuôi lạ (tự tạo)
+https://vietinbannk.vn/,phish,nhân đôi chữ (tự tạo)
+https://hoan-thue-2026.com/thuedientu,phish,từ khóa ở đường dẫn - heuristic tên miền sẽ bỏ sót (tự tạo)
+https://xacthuc-taikhoan.com/,phish,không có tên thương hiệu - chỉ Gemini nhìn ảnh mới bắt được (tự tạo)

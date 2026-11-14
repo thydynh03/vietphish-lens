@@ -1,0 +1,111 @@
+[
+  {
+    "name": "VCB giả, chỉ heuristic",
+    "url": "http://vietcombank-xacthuc.top:8080/",
+    "signals": { "hasPasswordField": true, "formActionHost": "collector.example-attacker.xyz" },
+    "mode": "no_vision", "sb": "skipped", "vision": null,
+    "expect": { "verdict": "SUSPICIOUS", "riskScore": 60, "degraded": false, "brandId": "vietcombank",
+      "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS", "FORM_OTHER_HOST"] }
+  },
+  {
+    "name": "VCB giả, đầy đủ",
+    "url": "http://vietcombank-xacthuc.top:8080/",
+    "signals": { "hasPasswordField": true, "formActionHost": "collector.example-attacker.xyz" },
+    "mode": "full", "sb": "skipped",
+    "vision": { "brand_detected": "vietcombank", "confidence": 0.9, "page_type": "other", "asks_sensitive_data": [], "urgency_language": false },
+    "expect": { "verdict": "DANGER", "riskScore": 100, "degraded": false, "brandId": "vietcombank",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "ASKS_PASSWORD", "BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS", "FORM_OTHER_HOST"] }
+  },
+  {
+    "name": "VNeID giả đòi OTP",
+    "url": "http://vneid-capnhat.cc:8080/",
+    "signals": { "hasOtpField": true },
+    "mode": "full", "sb": "skipped",
+    "vision": { "brand_detected": "vneid", "confidence": 0.9, "page_type": "other", "asks_sensitive_data": [], "urgency_language": true },
+    "expect": { "verdict": "DANGER", "riskScore": 100, "degraded": false, "brandId": "vneid",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "ASKS_OTP", "VNEID_OFFLINE", "URGENCY", "BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS"] }
+  },
+  {
+    "name": "Bài báo nhắc Vietcombank, không có ô nhập",
+    "url": "http://tintuc-demo.vn:8080/",
+    "signals": {},
+    "mode": "full", "sb": "skipped",
+    "vision": { "brand_detected": "vietcombank", "confidence": 0.9, "page_type": "other", "asks_sensitive_data": [], "urgency_language": false },
+    "expect": { "verdict": "SAFE", "riskScore": 19, "degraded": false, "brandId": "vietcombank",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "NO_HTTPS"] }
+  },
+  {
+    "name": "Tên miền trung lập giả giao diện VCB, có ô mật khẩu (luật cứng)",
+    "url": "http://xacthuc-taikhoan.com:8080/",
+    "signals": { "hasPasswordField": true },
+    "mode": "full", "sb": "skipped",
+    "vision": { "brand_detected": "vietcombank", "confidence": 0.9, "page_type": "other", "asks_sensitive_data": [], "urgency_language": false },
+    "expect": { "verdict": "DANGER", "riskScore": 85, "degraded": false, "brandId": "vietcombank",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "ASKS_PASSWORD", "NO_HTTPS"] }
+  },
+  {
+    "name": "Safe Browsing trúng",
+    "url": "https://shopee.vn/",
+    "signals": {},
+    "mode": "full", "sb": "hit", "vision": null,
+    "expect": { "verdict": "DANGER", "riskScore": 100, "degraded": false, "brandId": null, "codes": ["SAFE_BROWSING_HIT"] }
+  },
+  {
+    "name": "Vision không trả kết quả (null) thì degraded",
+    "url": "http://vietcombank-xacthuc.top:8080/",
+    "signals": { "hasPasswordField": true, "formActionHost": "collector.example-attacker.xyz" },
+    "mode": "full", "sb": "clean", "vision": null,
+    "expect": { "verdict": "SUSPICIOUS", "riskScore": 60, "degraded": true, "brandId": "vietcombank",
+      "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS", "FORM_OTHER_HOST"] }
+  },
+  {
+    "name": "Vision lỗi (timeout) thì degraded",
+    "url": "http://vneid-capnhat.cc:8080/",
+    "signals": { "hasOtpField": true },
+    "mode": "full", "sb": "error", "vision": { "error": "timeout" },
+    "expect": { "verdict": "SUSPICIOUS", "riskScore": 50, "degraded": true, "brandId": "vneid",
+      "codes": ["BRAND_KEYWORD", "SUSPICIOUS_TLD", "NO_HTTPS"] }
+  },
+  {
+    "name": "Vision không nhận ra thương hiệu nào",
+    "url": "https://shopee.vn/",
+    "signals": {},
+    "mode": "full", "sb": "clean",
+    "vision": { "brand_detected": "none", "confidence": 0.2, "page_type": "other", "asks_sensitive_data": [], "urgency_language": false },
+    "expect": { "verdict": "SAFE", "riskScore": 0, "degraded": false, "brandId": null, "codes": [] }
+  },
+  {
+    "name": "Vision tự thấy ô mật khẩu trong ảnh, cccd bị lọc bỏ, luật cứng",
+    "url": "https://xacthuc-taikhoan.com/",
+    "signals": {},
+    "mode": "full", "sb": "clean",
+    "vision": { "brand_detected": "vietcombank", "confidence": 0.8, "page_type": "login", "asks_sensitive_data": ["password", "cccd"], "urgency_language": true },
+    "expect": { "verdict": "DANGER", "riskScore": 85, "degraded": false, "brandId": "vietcombank",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "ASKS_PASSWORD", "URGENCY"] }
+  },
+  {
+    "name": "Confidence thấp 0.5 thì không áp luật cứng",
+    "url": "https://xacthuc-taikhoan.com/",
+    "signals": {},
+    "mode": "full", "sb": "clean",
+    "vision": { "brand_detected": "vietcombank", "confidence": 0.5, "page_type": "login", "asks_sensitive_data": ["password"], "urgency_language": false },
+    "expect": { "verdict": "SUSPICIOUS", "riskScore": 40, "degraded": false, "brandId": "vietcombank",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "ASKS_PASSWORD"] }
+  },
+  {
+    "name": "Ô số thẻ từ content script",
+    "url": "https://momo-nhanqua.vip/",
+    "signals": { "hasCardField": true },
+    "mode": "full", "sb": "clean",
+    "vision": { "brand_detected": "momo", "confidence": 0.9, "page_type": "payment", "asks_sensitive_data": [], "urgency_language": false },
+    "expect": { "verdict": "DANGER", "riskScore": 96, "degraded": false, "brandId": "momo",
+      "codes": ["BRAND_DOMAIN_MISMATCH", "ASKS_CARD", "BRAND_KEYWORD", "SUSPICIOUS_TLD"] }
+  },
+  {
+    "name": "Chế độ blacklist_only, Safe Browsing sạch",
+    "url": "http://vietcombank-xacthuc.top:8080/",
+    "signals": { "hasPasswordField": true },
+    "mode": "blacklist_only", "sb": "clean", "vision": null,
+    "expect": { "verdict": "SAFE", "riskScore": 0, "degraded": false, "brandId": null, "codes": [] }
+  }
+]
