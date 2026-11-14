@@ -234,6 +234,13 @@ async function check(tab) {
   // Khai báo ngoài try để khối catch (chế độ cơ bản) đọc được.
   let sensitive = false;
 
+  // Trang đổi URL mà vẫn cùng document (SPA dùng pushState hoặc hash) sau khi đã gửi lock:
+  // gỡ khóa để form không bị kẹt tới 15 giây. Chỉ gỡ khi chưa có lượt kiểm mới cho tab này,
+  // vì lượt mới có thể vừa khóa trang mới và unlock của lượt cũ sẽ mở nhầm.
+  const releaseStaleLock = async () => {
+    if (sensitive && inFlight.get(tab.id) === myUrl) await sendToTab(tab.id, { type: "unlock" });
+  };
+
   try {
     const official = await loadOfficial();
 
@@ -276,7 +283,10 @@ async function check(tab) {
         if (fresh && fresh.active && fresh.url === myUrl) {
           screenshot = (await captureScreenshot(fresh)) || undefined;
         }
-        if (!(await stillHere())) return;
+        if (!(await stillHere())) {
+          await releaseStaleLock();
+          return;
+        }
       }
 
       result = await callAnalyze({
@@ -288,7 +298,10 @@ async function check(tab) {
       });
     }
 
-    if (!(await stillHere())) return;
+    if (!(await stillHere())) {
+      await releaseStaleLock();
+      return;
+    }
 
     await setBadge(tab.id, BADGES[result.verdict] ? result.verdict : null);
     await saveTabResult(tab.id, { ...result, pageUrl: myUrl });
@@ -324,6 +337,8 @@ async function check(tab) {
         await saveTabResult(tab.id, { error: String((e && e.message) || e), pageUrl: myUrl });
         await sendToTab(tab.id, { type: "unlock" });
       }
+    } else {
+      await releaseStaleLock();
     }
   } finally {
     if (inFlight.get(tab.id) === myUrl) inFlight.delete(tab.id);
