@@ -97,6 +97,6 @@ Sample size: 28 URLs (`eval/domains.csv`: 15 legitimate, 13 phishing). Limitatio
 
 ## Demo video
 
-Filled in during the build window: [video link].
+[`docs/video/vietphish-lens.mp4`](docs/video/vietphish-lens.mp4) (1:57, 1080p, Vietnamese voice-over). Every extension screen in it is a real recording of the extension calling the Cloud Run server with Gemini.
 
-Cloud Run URL: [filled in during the build window].
+Cloud Run URL: https://vietphish-lens-538773205161.asia-southeast1.run.app
