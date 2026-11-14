@@ -14,6 +14,7 @@ Just cloned the repo? Read in this order:
 4. [`AGENTS.md`](AGENTS.md): rules for agents, commit and pull request rules.
 5. [`.agent/skills/vietphish/SKILL.md`](.agent/skills/vietphish/SKILL.md): project knowledge for agents: architecture, how to run, known traps.
 6. [`docs/KHAC-BIET.md`](docs/KHAC-BIET.md) (Vietnamese): how we differ from ChongLuaDao and J2TEAM Security, video script.
+7. [`docs/DATA-SOURCES.md`](docs/DATA-SOURCES.md): community phishing data (vn-badsite-filter, PhishVN, OpenPhish, PhishTank) and how the blocklist layer works. Implemented in the sandbox repo, not in this one.
 
 Step specs in `.agent/workflows/` stay in Vietnamese: they were verified line by line, and the user-facing strings they contain must stay Vietnamese.
 
@@ -56,7 +57,7 @@ shared/       official_domains.json (16 brands), source of the whitelist
 eval/         domains.csv (28 labelled URLs) and the evaluation script
 demo-sites/   3 static demo pages with a watermark, and serve.js serving them locally for 4 fake domains on port 8080
 scripts/      chrome-demo.ps1 opens a separate Chrome profile for the demo
-docs/         REQUIREMENTS.md, TASKS.md, tasks/, API.md, NGAY-THI.md, PREBUILT.md, KE-HOACH.md, KHAC-BIET.md, DEBUG-CHROME.md
+docs/         REQUIREMENTS.md, TASKS.md, tasks/, DATA-SOURCES.md, API.md, NGAY-THI.md, PREBUILT.md, KE-HOACH.md, KHAC-BIET.md, DEBUG-CHROME.md
 .agent/       workflows/: step specs for agents (00, A1 to A5, B1 to B6, C1 to C3); skills/vietphish/: project knowledge
 AGENTS.md     shared rules for agents working in this repo
 ```
