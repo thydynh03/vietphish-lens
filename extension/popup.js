@@ -102,7 +102,10 @@
       out.push({ label: "Kết nối bảo mật", value: "Có (HTTPS)", level: "good" });
     }
 
-    if (Number.isFinite(ni.ageDays)) {
+    if (ni.platform) {
+      // Tuổi tên miền của nền tảng (vd. vercel.app) không nói gì về trang con này.
+      out.push({ label: "Nơi đặt trang", value: "Nền tảng miễn phí " + ni.platform + ", ai cũng tạo được trang ở đây", level: "warn" });
+    } else if (Number.isFinite(ni.ageDays)) {
       const level = ni.ageDays <= 30 ? "bad" : ni.ageDays <= 180 ? "warn" : "good";
       out.push({ label: "Tên miền đăng ký", value: agoVi(ni.ageDays), level });
     }
