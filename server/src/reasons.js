@@ -13,7 +13,10 @@ const TEMPLATES = {
   "NO_HTTPS": { weight: 10, text: "Trang không dùng kết nối bảo mật HTTPS." },
   "FORM_OTHER_HOST": { weight: 10, text: "Dữ liệu bạn nhập sẽ được gửi sang máy chủ khác ({host})." },
   "URGENCY": { weight: 5, text: "Trang dùng lời lẽ hối thúc (khóa tài khoản, cập nhật gấp…)." },
-  "VNEID_OFFLINE": { weight: 0, text: "VNeID chỉ xác thực qua ứng dụng chính thức và vneid.gov.vn, không qua website lạ." }
+  "VNEID_OFFLINE": { weight: 0, text: "VNeID chỉ xác thực qua ứng dụng chính thức và vneid.gov.vn, không qua website lạ." },
+  "TLS_INVALID": { weight: 25, text: "Chứng chỉ bảo mật SSL/TLS của trang không hợp lệ hoặc đã hết hạn." },
+  "NEW_DOMAIN": { weight: 25, text: "Tên miền mới được tạo {days} ngày trước, dấu hiệu phổ biến của trang giả mạo vừa dựng." },
+  "NEW_DV_CERT": { weight: 15, text: "Trang yêu cầu thông tin nhạy cảm nhưng dùng chứng chỉ miễn phí vừa cấp {days} ngày trước, không xác thực tên tổ chức." }
 };
 
 export function reason(code, vars = {}) {
