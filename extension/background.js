@@ -345,25 +345,58 @@ async function check(tab) {
   }
 }
 
+// Trang tải mãi không xong (quảng cáo, kết nối treo) thì Chrome không bao giờ báo "complete".
+// Vì vậy khi trang bắt đầu tải, hẹn thêm một lượt kiểm tra dự phòng. Lượt nào chạy trước thì lượt sau bỏ qua.
+const FALLBACK_CHECK_MS = 5000;
+const fallbackTimers = new Map(); // tabId -> id của setTimeout
+const autoChecked = new Map(); // tabId -> URL đã được kiểm tra tự động trong lần tải này
+
+function autoCheck(tabId, url) {
+  if (autoChecked.get(tabId) === url) return;
+  chrome.tabs
+    .get(tabId)
+    .then((fresh) => {
+      if (!fresh || !fresh.active || fresh.url !== url || autoChecked.get(tabId) === url) return;
+      autoChecked.set(tabId, url);
+      return check(fresh);
+    })
+    .catch(() => {});
+}
+
+function clearFallback(tabId) {
+  const t = fallbackTimers.get(tabId);
+  if (t !== undefined) clearTimeout(t);
+  fallbackTimers.delete(tabId);
+}
+
 chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
   if (info.status === "loading") {
     chrome.storage.session.remove(tabKey(tabId)).catch(() => {});
+    autoChecked.delete(tabId);
+    clearFallback(tabId);
+    if (tab.url) {
+      const url = tab.url;
+      fallbackTimers.set(
+        tabId,
+        setTimeout(() => {
+          fallbackTimers.delete(tabId);
+          autoCheck(tabId, url);
+        }, FALLBACK_CHECK_MS)
+      );
+    }
     return;
   }
   if (info.status === "complete" && tab.active && tab.url) {
-    setTimeout(() => {
-      chrome.tabs
-        .get(tabId)
-        .then((fresh) => {
-          if (fresh && fresh.active && fresh.url === tab.url) return check(fresh);
-        })
-        .catch(() => {});
-    }, 300);
+    clearFallback(tabId);
+    const url = tab.url;
+    setTimeout(() => autoCheck(tabId, url), 300);
   }
 });
 
 chrome.tabs.onRemoved.addListener((tabId) => {
   inFlight.delete(tabId);
+  autoChecked.delete(tabId);
+  clearFallback(tabId);
   chrome.storage.session.remove(tabKey(tabId)).catch(() => {});
 });
 
