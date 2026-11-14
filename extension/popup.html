@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <title>VietPhish Lens</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { width: 340px; margin: 0; padding: 14px; font: 14px/1.45 "Segoe UI", Roboto, Arial, sans-serif; color: #1c2430; background: #fff; }
+    h1 { font-size: 15px; margin: 0 0 10px; color: #566576; letter-spacing: .02em; }
+    .host { font-weight: 600; word-break: break-all; margin-bottom: 8px; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; color: #fff; font-weight: 700; background: #566576; }
+    .badge.SAFE { background: #26734a; }
+    .badge.SUSPICIOUS { background: #a8670f; }
+    .badge.DANGER { background: #c0322b; }
+    .score { margin-left: 8px; color: #566576; }
+    ul { margin: 10px 0 0; padding-left: 18px; }
+    li { margin-bottom: 6px; }
+    .note { margin: 10px 0 0; color: #566576; }
+    .err { margin: 10px 0 0; color: #c0322b; word-break: break-word; }
+    .row { display: flex; gap: 8px; margin-top: 14px; }
+    button { flex: 1; font: inherit; padding: 8px 10px; border-radius: 6px; border: 1px solid #c4ccd6; background: #f4f6f9; cursor: pointer; }
+    button:disabled { opacity: .6; cursor: default; }
+    label { display: block; margin-top: 12px; cursor: pointer; }
+    .server { margin-top: 12px; font-size: 12px; color: #7a8796; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <h1>VietPhish Lens</h1>
+  <div class="host" id="host"></div>
+  <div><span class="badge" id="badge">Chưa kiểm tra</span><span class="score" id="score"></span></div>
+  <div class="note" id="degraded" hidden>Chưa có kết quả phân tích hình ảnh.</div>
+  <div class="note" id="whitelisted" hidden>Tên miền chính thức, không gửi dữ liệu lên máy chủ.</div>
+  <div class="err" id="error" hidden></div>
+  <ul id="reasons"></ul>
+  <div class="row"><button id="recheck">Kiểm tra lại</button><button id="report">Báo nhầm</button></div>
+  <label><input type="checkbox" id="demo"> Chế độ demo offline</label>
+  <div class="server" id="server"></div>
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+{
+  "vietcombank-xacthuc.top": {
+    "verdict": "DANGER",
+    "riskScore": 100,
+    "brand": {
+      "id": "vietcombank",
+      "name": "Vietcombank",
+      "officialUrl": "https://vietcombank.com.vn"
+    },
+    "reasons": [
+      {
+        "code": "BRAND_DOMAIN_MISMATCH",
+        "text": "Trang này trông giống Vietcombank nhưng địa chỉ vietcombank-xacthuc.top không phải tên miền chính thức (vietcombank.com.vn).",
+        "weight": 40
+      },
+      {
+        "code": "ASKS_PASSWORD",
+        "text": "Trang yêu cầu mật khẩu đăng nhập Vietcombank trên một tên miền lạ.",
+        "weight": 20
+      },
+      {
+        "code": "BRAND_KEYWORD",
+        "text": "Tên miền vietcombank-xacthuc.top chứa tên Vietcombank nhưng không thuộc Vietcombank.",
+        "weight": 25
+      },
+      {
+        "code": "SUSPICIOUS_TLD",
+        "text": "Đuôi .top thường bị lợi dụng trong lừa đảo.",
+        "weight": 15
+      },
+      {
+        "code": "NO_HTTPS",
+        "text": "Trang không dùng kết nối bảo mật HTTPS.",
+        "weight": 10
+      },
+      {
+        "code": "FORM_OTHER_HOST",
+        "text": "Dữ liệu bạn nhập sẽ được gửi sang máy chủ khác (collector.example-attacker.xyz).",
+        "weight": 10
+      }
+    ],
+    "degraded": false,
+    "layers": {
+      "whitelist": false,
+      "safeBrowsing": "skipped",
+      "heuristics": 60,
+      "vision": {
+        "brand_detected": "vietcombank",
+        "confidence": 0.9,
+        "page_type": "other",
+        "asks_sensitive_data": [],
+        "visual_evidence": [
+          "(mock) suy ra từ tiêu đề trang"
+        ],
+        "urgency_language": false,
+        "mock": true
+      }
+    },
+    "latencyMs": {
+      "total": 2,
+      "vision": 0
+    },
+    "cached": false
+  },
+  "vneid-capnhat.cc": {
+    "verdict": "DANGER",
+    "riskScore": 100,
+    "brand": {
+      "id": "vneid",
+      "name": "VNeID",
+      "officialUrl": "https://vneid.gov.vn"
+    },
+    "reasons": [
+      {
+        "code": "BRAND_DOMAIN_MISMATCH",
+        "text": "Trang này trông giống VNeID nhưng địa chỉ vneid-capnhat.cc không phải tên miền chính thức (vneid.gov.vn).",
+        "weight": 40
+      },
+      {
+        "code": "ASKS_OTP",
+        "text": "Trang yêu cầu nhập mã OTP. Ngân hàng và cơ quan nhà nước không bao giờ hỏi OTP trên trang lạ.",
+        "weight": 20
+      },
+      {
+        "code": "VNEID_OFFLINE",
+        "text": "VNeID chỉ xác thực qua ứng dụng chính thức và vneid.gov.vn, không qua website lạ.",
+        "weight": 0
+      },
+      {
+        "code": "URGENCY",
+        "text": "Trang dùng lời lẽ hối thúc (khóa tài khoản, cập nhật gấp…).",
+        "weight": 5
+      },
+      {
+        "code": "BRAND_KEYWORD",
+        "text": "Tên miền vneid-capnhat.cc chứa tên VNeID nhưng không thuộc VNeID.",
+        "weight": 25
+      },
+      {
+        "code": "SUSPICIOUS_TLD",
+        "text": "Đuôi .cc thường bị lợi dụng trong lừa đảo.",
+        "weight": 15
+      },
+      {
+        "code": "NO_HTTPS",
+        "text": "Trang không dùng kết nối bảo mật HTTPS.",
+        "weight": 10
+      }
+    ],
+    "degraded": false,
+    "layers": {
+      "whitelist": false,
+      "safeBrowsing": "skipped",
+      "heuristics": 50,
+      "vision": {
+        "brand_detected": "vneid",
+        "confidence": 0.9,
+        "page_type": "other",
+        "asks_sensitive_data": [],
+        "visual_evidence": [
+          "(mock) suy ra từ tiêu đề trang"
+        ],
+        "urgency_language": true,
+        "mock": true
+      }
+    },
+    "latencyMs": {
+      "total": 0,
+      "vision": 0
+    },
+    "cached": false
+  },
+  "xacthuc-taikhoan.com": {
+    "verdict": "DANGER",
+    "riskScore": 85,
+    "brand": {
+      "id": "vietcombank",
+      "name": "Vietcombank",
+      "officialUrl": "https://vietcombank.com.vn"
+    },
+    "reasons": [
+      {
+        "code": "BRAND_DOMAIN_MISMATCH",
+        "text": "Trang này trông giống Vietcombank nhưng địa chỉ xacthuc-taikhoan.com không phải tên miền chính thức (vietcombank.com.vn).",
+        "weight": 40
+      },
+      {
+        "code": "ASKS_PASSWORD",
+        "text": "Trang yêu cầu mật khẩu đăng nhập Vietcombank trên một tên miền lạ.",
+        "weight": 20
+      },
+      {
+        "code": "NO_HTTPS",
+        "text": "Trang không dùng kết nối bảo mật HTTPS.",
+        "weight": 10
+      },
+      {
+        "code": "FORM_OTHER_HOST",
+        "text": "Dữ liệu bạn nhập sẽ được gửi sang máy chủ khác (collector.example-attacker.xyz).",
+        "weight": 10
+      }
+    ],
+    "degraded": false,
+    "layers": {
+      "whitelist": false,
+      "safeBrowsing": "skipped",
+      "heuristics": 20,
+      "vision": {
+        "brand_detected": "vietcombank",
+        "confidence": 0.9,
+        "page_type": "other",
+        "asks_sensitive_data": [],
+        "visual_evidence": [
+          "(mock) suy ra từ tiêu đề trang"
+        ],
+        "urgency_language": false,
+        "mock": true
+      }
+    },
+    "latencyMs": {
+      "total": 0,
+      "vision": 0
+    },
+    "cached": false
+  },
+  "tintuc-demo.vn": {
+    "verdict": "SAFE",
+    "riskScore": 19,
+    "brand": {
+      "id": "vietcombank",
+      "name": "Vietcombank",
+      "officialUrl": "https://vietcombank.com.vn"
+    },
+    "reasons": [
+      {
+        "code": "BRAND_DOMAIN_MISMATCH",
+        "text": "Trang này trông giống Vietcombank nhưng địa chỉ tintuc-demo.vn không phải tên miền chính thức (vietcombank.com.vn).",
+        "weight": 40
+      },
+      {
+        "code": "NO_HTTPS",
+        "text": "Trang không dùng kết nối bảo mật HTTPS.",
+        "weight": 10
+      }
+    ],
+    "degraded": false,
+    "layers": {
+      "whitelist": false,
+      "safeBrowsing": "skipped",
+      "heuristics": 10,
+      "vision": {
+        "brand_detected": "vietcombank",
+        "confidence": 0.9,
+        "page_type": "other",
+        "asks_sensitive_data": [],
+        "visual_evidence": [
+          "(mock) suy ra từ tiêu đề trang"
+        ],
+        "urgency_language": false,
+        "mock": true
+      }
+    },
+    "latencyMs": {
+      "total": 0,
+      "vision": 0
+    },
+    "cached": false
+  }
+}

@@ -61,6 +61,7 @@ function lazyJson(fileName) {
 }
 
 const loadOfficial = lazyJson("official_domains.json");
+const loadDemoCache = lazyJson("demo-cache.json");
 
 function hostMatches(hostname, d) {
   return hostname === d || hostname.endsWith("." + d);
@@ -81,6 +82,16 @@ function hostnameHasBrandKeyword(official, hostname) {
   return (official.brands || []).some((b) =>
     (b.keywords || []).some((k) => hostname.includes(k))
   );
+}
+
+// Cờ demo offline nằm ở storage.local để còn sau khi tắt Chrome.
+async function isDemoOffline() {
+  try {
+    const { DEMO_OFFLINE } = await chrome.storage.local.get("DEMO_OFFLINE");
+    return Boolean(DEMO_OFFLINE);
+  } catch {
+    return false;
+  }
 }
 
 function bytesToBase64(bytes) {
@@ -242,7 +253,15 @@ async function check(tab) {
     await saveTabResult(tab.id, { checking: true, pageUrl: myUrl });
 
     let result = null;
-    // A3 chèn nhánh DEMO_OFFLINE ở đây
+    // Chế độ demo offline: tra cache theo hostname, không có thì đi tiếp bình thường.
+    if (await isDemoOffline()) {
+      try {
+        const cache = await loadDemoCache();
+        if (cache && cache[url.hostname]) result = cache[url.hostname];
+      } catch (e) {
+        console.warn("VietPhish: không đọc được demo-cache", e);
+      }
+    }
 
     if (!result) {
       const signals = (await sendToTab(tab.id, { type: "getSignals" })) || {};
@@ -331,4 +350,12 @@ chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
 chrome.tabs.onRemoved.addListener((tabId) => {
   inFlight.delete(tabId);
   chrome.storage.session.remove(tabKey(tabId)).catch(() => {});
+});
+
+// Tin từ popup. Trả lời đồng bộ nên KHÔNG return true.
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg && msg.type === "recheck" && typeof msg.tabId === "number") {
+    chrome.tabs.get(msg.tabId).then((tab) => check(tab)).catch((e) => console.warn("VietPhish: recheck lỗi", e));
+    sendResponse({ ok: true });
+  }
 });
