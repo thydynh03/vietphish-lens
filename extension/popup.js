@@ -60,6 +60,55 @@
     }
   }
 
+  const DAY = 24 * 60 * 60 * 1000;
+
+  function dateVi(d) {
+    return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+  }
+
+  // "120 ngày trước" hoặc "khoảng 26 năm trước", kèm ngày cụ thể
+  function agoVi(days) {
+    const when = dateVi(new Date(Date.now() - days * DAY));
+    if (days < 1) return "hôm nay (" + when + ")";
+    if (days < 365) return days + " ngày trước (" + when + ")";
+    return "khoảng " + Math.floor(days / 365) + " năm trước (" + when + ")";
+  }
+
+  // Đổi dữ liệu kỹ thuật (layers.netIntel của server) thành câu dễ hiểu.
+  // Khi server chưa bật NetIntel thì chỉ còn dòng HTTPS, đọc từ địa chỉ trang.
+  function pageFacts(r) {
+    const out = [];
+    let isHttps = false;
+    try {
+      isHttps = new URL(tab.url).protocol === "https:";
+    } catch {
+      return out;
+    }
+    const ni = r.layers && r.layers.netIntel && !r.layers.netIntel.skipped ? r.layers.netIntel.facts || {} : {};
+    const tls = ni.tls || null;
+
+    if (!isHttps) {
+      out.push({ label: "Kết nối bảo mật", value: "Không có. Dữ liệu bạn nhập được gửi đi mà không mã hóa", level: "bad" });
+    } else if (tls && !tls.error && tls.authorized === false) {
+      out.push({ label: "Chứng chỉ bảo mật", value: "Không hợp lệ hoặc đã hết hạn", level: "bad" });
+    } else if (tls && !tls.error && tls.authorized) {
+      const parts = ["Hợp lệ"];
+      const from = tls.validFrom ? new Date(tls.validFrom) : null;
+      if (from && !isNaN(from)) parts.push("cấp ngày " + dateVi(from));
+      if (tls.issuerO) parts.push("bởi " + tls.issuerO);
+      const fresh = Number.isFinite(tls.certAgeDays) && tls.certAgeDays <= 14 && !tls.subjectO;
+      out.push({ label: "Chứng chỉ bảo mật", value: parts.join(", "), level: fresh ? "warn" : "good" });
+    } else {
+      out.push({ label: "Kết nối bảo mật", value: "Có (HTTPS)", level: "good" });
+    }
+
+    if (Number.isFinite(ni.ageDays)) {
+      const level = ni.ageDays <= 30 ? "bad" : ni.ageDays <= 180 ? "warn" : "good";
+      out.push({ label: "Tên miền đăng ký", value: agoVi(ni.ageDays), level });
+    }
+    return out;
+  }
+
   function kindOf(r) {
     if (!isWeb) return "NONWEB";
     if (!r) return "NONE";
@@ -134,12 +183,32 @@
       li.textContent = x.text;
       list.appendChild(li);
     }
+    $("why").hidden = reasons.length === 0;
+
+    // Thông tin trang: kết nối bảo mật, chứng chỉ, tuổi tên miền
+    const facts = hasVerdict ? pageFacts(r) : [];
+    const factList = $("facts");
+    factList.textContent = "";
+    for (const f of facts) {
+      const li = document.createElement("li");
+      li.className = f.level;
+      const label = document.createElement("span");
+      label.className = "k";
+      label.textContent = f.label;
+      const value = document.createElement("span");
+      value.textContent = f.value;
+      li.append(label, value);
+      factList.appendChild(li);
+    }
+    $("factsBox").hidden = facts.length === 0;
+
+    const hasDetails = reasons.length > 0 || facts.length > 0;
     const toggle = $("toggle");
-    toggle.hidden = reasons.length === 0;
-    toggle.className = "btn " + (official.hidden ? "primary" : "ghost");
+    toggle.hidden = !hasDetails;
+    toggle.className = "btn " + (official.hidden && kind !== "SAFE" ? "primary" : "ghost");
     toggle.textContent = open ? "Ẩn chi tiết −" : "Xem chi tiết +";
     toggle.setAttribute("aria-expanded", String(open));
-    $("details").hidden = !open || reasons.length === 0;
+    $("details").hidden = !open || !hasDetails;
 
     // Nút phụ
     $("recheck").disabled = !tab || !isWeb || kind === "CHECKING";
